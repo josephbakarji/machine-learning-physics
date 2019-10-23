@@ -1,7 +1,8 @@
 '''
 Created on Mar 20, 2019
+Review on May 5 2019
 
-@author: Adrien Papaioannou
+@author: Cedric Fraces, Adrien Papaioannou
 '''
 
 import time
@@ -76,7 +77,6 @@ def net_pde_res_buckley_gravity(u, x, t):
     nu = 0#0.001 / np.pi# artificial diffusivity
     kro = tf.square(tf.divide(1 - u - Sor,1 - Swc - Sor))
     krw = tf.square(tf.divide(u - Swc,1 - Swc - Sor))
-#     frac = tf.divide(1 - Ng * np.sin(theta * np.pi / 180) * kro,1 + tf.divide(kro, M * krw))
     frac = tf.square(u - Swc) * (1 - Ng * np.sin(theta * np.pi / 180) * tf.square(1 - u - Sor)/(1 - Sor - Swc)**2) / (tf.square(u - Swc) + tf.square(1 - u - Sor) / M)
     frac_u = tf.gradients(frac,u)[0]
     f = u_t + frac_u*u_x - nu * u_xx
